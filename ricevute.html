@@ -23,15 +23,17 @@
             width: 200px;
             border-bottom: 1px solid green;
             margin-bottom: 10px;
+            flex: inherit;
+            float: left;
         }
         
         .bottomline-full {
             width: 100%;
             border-bottom: 1px solid green;
             margin-bottom: 10px;
-            float: right;
-            display: inline;
             margin-left: 10px;
+            float: left;
+            flex: inherit;
         }
         
         .linebreak {
@@ -39,33 +41,49 @@
             width: 100%;
             border-bottom: 1px solid green;
         }
+        
+        .withBottomLine {
+            display: flex;
+        }
+        
+        .withBottomLine h4 {
+            float: left;
+        }
+        
+        .withBottomLine h3 {
+            float: left;
+        }
+        
+        .bollo {
+            width: 100%;
+            padding-left: 20px;
+            padding-right: 20px;
+            border-top: 1px solid green;
+        }
     </style>
+    <script>
+        function setData(data) {
+            template = $("#template").clone().html();
+            $content = $("#Content");
+
+            data.forEach(element => {
+                var edited = template
+                $.each(element, function(k, v) {
+                    edited.replace("{{" + k + "}}", v);
+                })
+                $("#Content").append(edited)
+            });
+        }
+    </script>
 </head>
 
 <body>
-    <div class="container">
-        <div class="row">
-            <p></p>
-        </div>
-        <div class="row">
-            <div class="col"></div>
-            <div class="col"></div>
-            <div class="col allRight allInLine">
-                <h3>RICEVUTA</h3>
-                <h4>n.</h4>
-                <div id="nr" class="bottomline-small"></div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="linebreak"></div>
-        </div>
-        <div class="row mt-4">
-            <div class="col" style="display: block;">
-                <h4 style="float: left; display: inline;">Ricevuti da:</h4>
-                <div id="Intestatario" class="bottomline-full">&nbsp;</div>
-            </div>
-        </div>
+    <div class="container" style="border: 2px solid green;" id="Content">
+
     </div>
+
+
+
 </body>
 
 </html>
