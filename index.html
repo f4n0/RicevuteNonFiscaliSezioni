@@ -69,7 +69,12 @@
         
         .RicevutaContainer {
             border: 2px solid green;
-            margin: 50px;
+            padding-left: 15px;
+            overflow: hidden;
+        }
+        
+        .Content {
+            padding: 50px;
         }
     </style>
 </head>
@@ -135,55 +140,60 @@
     <div id="out_image"></div>
 
     <div id="template" style="display: none;">
-        <div class="RicevutaContainer">
-            <div class="row">
-                <p></p>
-            </div>
-            <div class="row">
-                <div class="col"></div>
-                <div class="col"></div>
-                <div class="col allRight allInLine">
-                    <h3>RICEVUTA</h3>
-                    <h4>n.</h4>
-                    <div class="bottomline-small">{{nr}}</div>
+        <div class="Content" data-id="{{nr}}">
+            <div class="RicevutaContainer">
+                <div class="row">
+                    <p></p>
                 </div>
-            </div>
-            <div class="row">
-                <div class="linebreak"></div>
-            </div>
-            <div class="row mt-3">
-                <div class="col withBottomLine">
-                    <h4>Ricevuti da:</h4>
-                    <div class="bottomline-full">{{intestatario}}</div>
+                <div class="row">
+                    <div class="col"></div>
+                    <div class="col"></div>
+                    <div class="col allRight allInLine">
+                        <h3>RICEVUTA</h3>
+                        <h4>n.</h4>
+                        <div class="bottomline-small">{{nr}}</div>
+                    </div>
                 </div>
-            </div>
-            <div class="row mt-1">
-                <div class="col withBottomLine">
-                    <h4>€:</h4>
-                    <div class="bottomline-full">{{prezzo}}</div>
+                <div class="row">
+                    <div class="linebreak"></div>
                 </div>
-            </div>
-            <div class="row mt-1">
-                <div class="col withBottomLine">
-                    <h4>Causale:</h4>
-                    <div class="bottomline-full">{{causale}}</div>
+                <div class="row mt-3">
+                    <div class="col withBottomLine">
+                        <h4>Ricevuti da:</h4>
+                        <div class="bottomline-full">{{intestatario}}</div>
+                    </div>
                 </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col"></div>
-                <div class="col"></div>
-                <div class="col withBottomLine">
-                    <h3>TOTALE:</h3>
-                    <div class="bottomline-full">{{totale}}</div>
+                <div class="row mt-1">
+                    <div class="col withBottomLine">
+                        <h4>€:</h4>
+                        <div class="bottomline-full">{{prezzo}}</div>
+                    </div>
                 </div>
-            </div>
-            <div class="row mt-4">
-                <p class="bollo">Esente da bollo ai sensi dell'art. 82 co.5 D Lgs 117/2017</p>
+                <div class="row mt-1">
+                    <div class="col withBottomLine">
+                        <h4>Causale:</h4>
+                        <div class="bottomline-full">{{causale}}</div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col"></div>
+                    <div class="col"></div>
+                    <div class="col withBottomLine">
+                        <h3>TOTALE:</h3>
+                        <div class="bottomline-full">{{totale}}</div>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <p class="bollo">Esente da bollo ai sensi dell'art. 82 co.5 D Lgs 117/2017</p>
+                </div>
             </div>
         </div>
     </div>
 
-    <div id="Content"></div>
+    <div id="all">
+    </div>
+
+
 
     <script>
         var $table = $('#RicevuteTbl')
@@ -211,27 +221,25 @@
             $("#printRicevute").on("click", () => {
                 var data = $table.bootstrapTable('getData');
                 var template = $("#template").clone().removeAttr("style").html();
-                var $content = $("#Content");
+                var $content = $("#all");
 
                 for (var element in data) {
                     var edited = template
                     Object.keys(data[element]).forEach(val => {
-                        edited = edited.replace("{{" + val + "}}", data[element][val]);
+                        edited = edited.replaceAll("{{" + val + "}}", data[element][val]);
                     })
-                    $content.html(edited)
-                        /* html2canvas($("#Content")[0]).then(function(canvas) {
-                             $("#out_image").append("<a download='" + data[element]["nr"] + "' href='" + canvas.toDataURL() + "'>" + data[element]["nr"] + "</a>");
-                         });*/
-
-                    domtoimage.toJpeg(document.getElementById('Content'), {
-                            bgcolor: 'white'
-                        })
-                        .then(function(blob) {
-                            $("#out_image").append("<a download='" + data[element]["nr"] + "' href='" + blob + "'>" + data[element]["nr"] + "</a>");
-
-                        });
+                    $content.append(edited)
                 };
-                //$content.empty();
+                var res = document.getElementById('all').getElementsByClassName('Content')
+                Array.prototype.forEach.call(res, function(elem) {
+                    domtoimage.toJpeg(elem, {
+                        bgcolor: 'white'
+                    }).then(function(blob) {
+                        $("#out_image").append("<a download='" + elem.getAttribute("data-id") + "' href='" + blob + "'>" + elem.getAttribute("data-id") + "</a><br>");
+                        elem.remove();
+                    });
+                });
+
             })
         })
 
