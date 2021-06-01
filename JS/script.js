@@ -11,7 +11,9 @@ $(function() {
         event.preventDefault();
         var data = getFormData($form);
         var ultimoNr = parseInt(data.UltimoNr);
-        if ((index == 0) || (index < parseInt(data.UltimoNr) && !isNaN(ultimoNr)))
+        if (isNaN(ultimoNr)) ultimoNr = 0;
+
+        if ((index == 0) || (index < parseInt(data.UltimoNr)))
             index = ultimoNr + 1;
         console.log(data);
         data.nr = BuildNos();
