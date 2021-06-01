@@ -10,8 +10,10 @@ $(function() {
     $form.on("submit", (event) => {
         event.preventDefault();
         var data = getFormData($form);
+        if ((index == 0) || index < parseInt(data.UltimoNr))
+            index = parseInt(data.UltimoNr);
         console.log(data);
-        data.nr = BuildNos(data.data);
+        data.nr = BuildNos();
         $table.bootstrapTable('insertRow', {
             index: index,
             row: data
@@ -56,7 +58,6 @@ $(function() {
             tmpElement.append(data[element]["causale"] + '\t');
             tmpElement.append(data[element]["totale"] + '\t\n');
         }
-
         tmpElement.appendTo($('body')).focus().select();
         document.execCommand("copy");
         tmpElement.remove();
@@ -65,9 +66,8 @@ $(function() {
 
 })
 
-function BuildNos(data) {
-    var splitted = data.split("/");
-    return splitted[2] + "-" + splitted[1] + "-" + splitted[0] + "-" + pad(index, 4)
+function BuildNos() {
+    return pad(index, 5)
 }
 
 function pad(str, max) {

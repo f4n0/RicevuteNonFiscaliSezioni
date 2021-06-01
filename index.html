@@ -19,57 +19,68 @@
 </head>
 
 <body>
-    <div class="container">
-        <h3>Inserimento Ricevute</h3>
-        <br>
-        <form id="RicevuteForm">
-            <div class="row">
-                <div class="col">
-                    <label for="prezzo">Ultimo Nr: </label>
-                    <input type="text" class="form-control" placeholder="Ultimo Nr" name="UltimoNr" autocomplete="off">
+    <div class="container mt-4">
+        <h1>Genera Ricevute</h1>
+        <p>
+            Ehi anche tu vuoi generare della fatture non fiscali in modo semplice e veloce da un sito ed esportarli come immagini?
+            <br> Bene questo sito fa per te!</p>
+        <hr>
+        <div class="row">
+            <div class="col">
+                <h3>Inserisci</h3>
+                <br>
+                <form id="RicevuteForm">
+                    <div class="row">
+                        <div class="col">
+                            <label for="prezzo">Ultimo Nr: </label>
+                            <input type="text" class="form-control" placeholder="Ultimo Nr" name="UltimoNr" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="data">Data: </label>
+                            <input type="text" class="form-control" id="datepicker" placeholder="Data" name="data" autocomplete="off" required>
+                        </div>
+                        <div class="col">
+                            <label for="intestatario">Intestatario: </label>
+                            <input type="text" class="form-control" placeholder="Intestatario" name="intestatario" autocomplete="off" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="prezzo">Prezzo (in lettere): </label>
+                            <input type="text" class="form-control" placeholder="Prezzo" name="prezzo" autocomplete="off" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="causale">Causale: </label>
+                            <input type="text" class="form-control" placeholder="Causale" name="causale" autocomplete="off" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="totale">Totale: </label>
+                            <input type="number" class="form-control" placeholder="Totale" name="totale" autocomplete="off" required>
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col">
+                            <input type="submit" class="btn btn-success" value="Salva">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col">
+                <div id="out_image">
+                    <h4>Ricevute:</h4>
+                    <button type="button" class="btn btn-secondary" id="DownloadAll">Scarica tutto</button><br>
+                    <div id="Links"></div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col">
-                    <label for="data">Data: </label>
-                    <input type="text" class="form-control" id="datepicker" placeholder="Data" name="data" autocomplete="off" required>
-                </div>
-                <div class="col">
-                    <label for="intestatario">Intestatario: </label>
-                    <input type="text" class="form-control" placeholder="Intestatario" name="intestatario" autocomplete="off" required>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <label for="prezzo">Prezzo (in lettere): </label>
-                    <input type="text" class="form-control" placeholder="Prezzo" name="prezzo" autocomplete="off" required>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <label for="causale">Causale: </label>
-                    <input type="text" class="form-control" placeholder="Causale" name="causale" autocomplete="off" required>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <label for="totale">Totale: </label>
-                    <input type="number" class="form-control" placeholder="Totale" name="totale" autocomplete="off" required>
-                </div>
-            </div>
-            <div class="row mt-4">
-                <div class="col">
-                    <input type="submit" class="btn btn-success" value="Salva">
-                </div>
-            </div>
-        </form>
-        <br>
-        <div id="out_image">
-            <h4>Ricevute:</h4>
-            <button type="button" class="btn btn-secondary" id="DownloadAll">Scarica tutto</button><br>
-            <div id="Links"></div>
         </div>
         <br>
+        <hr>
         <h4>Dati:</h4>
         <div id="toolbar">
             <button type="button" class="btn btn-secondary" id="printRicevute">Stampa Ricevute</button>
