@@ -25,6 +25,12 @@
         <form id="RicevuteForm">
             <div class="row">
                 <div class="col">
+                    <label for="prezzo">Ultimo Nr: </label>
+                    <input type="text" class="form-control" placeholder="Ultimo Nr" name="UltimoNr" autocomplete="off">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
                     <label for="data">Data: </label>
                     <input type="text" class="form-control" id="datepicker" placeholder="Data" name="data" autocomplete="off" required>
                 </div>
@@ -51,12 +57,18 @@
                     <input type="number" class="form-control" placeholder="Totale" name="totale" autocomplete="off" required>
                 </div>
             </div>
-            <div class="row">
+            <div class="row mt-4">
                 <div class="col">
                     <input type="submit" class="btn btn-success" value="Salva">
                 </div>
             </div>
         </form>
+        <br>
+        <div id="out_image">
+            <h4>Ricevute:</h4>
+            <button type="button" class="btn btn-secondary" id="DownloadAll">Scarica tutto</button><br>
+            <div id="Links"></div>
+        </div>
         <br>
         <h4>Dati:</h4>
         <div id="toolbar">
@@ -75,10 +87,6 @@
                 </tr>
             </thead>
         </table>
-    </div>
-    <div id="out_image">
-        <button type="button" class="btn btn-secondary" id="DownloadAll">Scarica tutto</button><br>
-        <div id="Links"></div>
     </div>
 
     <div id="template" style="display: none;">

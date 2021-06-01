@@ -47,12 +47,27 @@ $(function() {
         ele.each(elem => ele[elem].click())
     });
 
+    $("#CopyExcel").click(function() {
+        let tmpElement = $('<textarea style="opacity:0;"></textarea>');
+        var data = $table.bootstrapTable('getData');
+        for (var element in data) {
+            tmpElement.append(data[element]["nr"] + '\t');
+            tmpElement.append(data[element]["data"] + '\t');
+            tmpElement.append(data[element]["causale"] + '\t');
+            tmpElement.append(data[element]["totale"] + '\t\n\r');
+        }
+
+        tmpElement.appendTo($('body')).focus().select();
+        document.execCommand("copy");
+        tmpElement.remove();
+    });
+
 
 })
 
 function BuildNos(data) {
     var splitted = data.split("/");
-    return splitted[2] + "-" + splitted[1] + "-" + pad(index, 4)
+    return splitted[2] + "-" + splitted[1] + "-" + splitted[0] + "-" + pad(index, 4)
 }
 
 function pad(str, max) {
