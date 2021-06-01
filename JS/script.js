@@ -54,7 +54,7 @@ $(function() {
             tmpElement.append(data[element]["nr"] + '\t');
             tmpElement.append(data[element]["data"] + '\t');
             tmpElement.append(data[element]["causale"] + '\t');
-            tmpElement.append(data[element]["totale"] + '\t\n\r');
+            tmpElement.append(data[element]["totale"] + '\t\n');
         }
 
         tmpElement.appendTo($('body')).focus().select();
