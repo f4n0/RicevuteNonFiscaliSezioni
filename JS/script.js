@@ -40,7 +40,13 @@ $(function() {
         };
         var res = document.getElementById('all').getElementsByClassName('Content')
         Array.prototype.forEach.call(res, function(elem) {
-            html2canvas(elem).then(function(canvas) {
+            console.log(elem);
+            var useWidth = elem.scrollWidth;
+            var useHeight = elem.scrollHeight;
+            html2canvas(elem, {
+                width: useWidth,
+                height: useHeight
+            }).then(function(canvas) {
                 $("#Links").append("<a download='" + elem.getAttribute("data-id") + "' href='" + canvas.toDataURL() + "'>" + elem.getAttribute("data-id") + "</a><br>");
                 elem.remove();
             });

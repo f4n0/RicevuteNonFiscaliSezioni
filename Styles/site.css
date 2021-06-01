@@ -54,6 +54,8 @@
     border: 2px solid green;
     padding: 25px 0 25px 15px;
     overflow: hidden;
+    width: 2000px;
+    background-color: white;
 }
 
 .Content {
