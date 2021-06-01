@@ -10,8 +10,9 @@ $(function() {
     $form.on("submit", (event) => {
         event.preventDefault();
         var data = getFormData($form);
-        if ((index == 0) || index < parseInt(data.UltimoNr))
-            index = parseInt(data.UltimoNr);
+        var ultimoNr = parseInt(data.UltimoNr);
+        if ((index == 0) || (index < parseInt(data.UltimoNr) && ultimoNr))
+            index = ultimoNr + 1;
         console.log(data);
         data.nr = BuildNos();
         $table.bootstrapTable('insertRow', {
