@@ -9,8 +9,8 @@
 }
 
 .bottomline-small {
-    width: 200px;
-    border-bottom: 1px solid green;
+    min-width: 92%;
+    border: 1px solid green;
     margin-bottom: 10px;
     flex: inherit;
     float: left;
@@ -18,7 +18,7 @@
 
 .bottomline-full {
     width: 100%;
-    border-bottom: 1px solid green;
+    border: 1px solid green;
     margin-bottom: 10px;
     margin-left: 10px;
     float: left;
@@ -52,9 +52,9 @@
 
 .RicevutaContainer {
     border: 2px solid green;
-    padding: 25px 0 25px 15px;
+    padding: 15px;
     overflow: hidden;
-    width: 2000px;
+    width: 1000px;
     background-color: white;
 }
 
@@ -65,4 +65,6 @@
 .value {
     font-size: large;
     font-weight: 600;
+    padding-left: 10px;
+    background-color: #f0f0f0;
 }
