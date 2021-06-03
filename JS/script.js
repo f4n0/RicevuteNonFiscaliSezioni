@@ -45,20 +45,8 @@ $(function() {
             var useHeight = elem.scrollHeight;
             domtoimage.toPng(elem).then(function (dataUrl) {
                 $("#Links").append("<a download='" + elem.getAttribute("data-id") + "' href='" + dataUrl + "'>" + elem.getAttribute("data-id") + "</a><br>");
-            })
-           /* html2canvas(elem, {
-                width: useWidth,
-                height: useHeight,
-                scrollY: 0,
-                Logging: false,
-                scrollX: 0,
-                Usecors: true,
-                foreignObjectRendering: true,
-                allowTaint: true
-            }).then(function(canvas) {
-                $("#Links").append("<a download='" + elem.getAttribute("data-id") + "' href='" + canvas.toDataURL() + "'>" + elem.getAttribute("data-id") + "</a><br>");
                 elem.remove();
-            });*/
+            })
         });
 
     });
