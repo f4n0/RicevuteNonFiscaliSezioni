@@ -49,7 +49,9 @@ $(function() {
                 scrollY: 0,
                 Logging: false,
                 scrollX: 0,
-                Usecors: true
+                Usecors: true,
+                foreignObjectRendering: true,
+                allowTaint: true
             }).then(function(canvas) {
                 $("#Links").append("<a download='" + elem.getAttribute("data-id") + "' href='" + canvas.toDataURL() + "'>" + elem.getAttribute("data-id") + "</a><br>");
                 elem.remove();
