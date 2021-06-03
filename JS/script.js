@@ -43,7 +43,10 @@ $(function() {
             console.log(elem);
             var useWidth = elem.scrollWidth;
             var useHeight = elem.scrollHeight;
-            html2canvas(elem, {
+            domtoimage.toPng(elem).then(function (dataUrl) {
+                $("#Links").append("<a download='" + elem.getAttribute("data-id") + "' href='" + dataUrl + "'>" + elem.getAttribute("data-id") + "</a><br>");
+            })
+           /* html2canvas(elem, {
                 width: useWidth,
                 height: useHeight,
                 scrollY: 0,
@@ -55,7 +58,7 @@ $(function() {
             }).then(function(canvas) {
                 $("#Links").append("<a download='" + elem.getAttribute("data-id") + "' href='" + canvas.toDataURL() + "'>" + elem.getAttribute("data-id") + "</a><br>");
                 elem.remove();
-            });
+            });*/
         });
 
     });
