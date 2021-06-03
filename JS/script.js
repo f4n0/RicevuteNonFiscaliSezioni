@@ -45,7 +45,11 @@ $(function() {
             var useHeight = elem.scrollHeight;
             html2canvas(elem, {
                 width: useWidth,
-                height: useHeight
+                height: useHeight,
+                scrollY: 0,
+                Logging: false,
+                scrollX: 0,
+                Usecors: true
             }).then(function(canvas) {
                 $("#Links").append("<a download='" + elem.getAttribute("data-id") + "' href='" + canvas.toDataURL() + "'>" + elem.getAttribute("data-id") + "</a><br>");
                 elem.remove();
