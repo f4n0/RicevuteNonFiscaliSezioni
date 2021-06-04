@@ -1,5 +1,5 @@
-var $table = $('#RicevuteTbl')
-var $form = $('#RicevuteForm')
+var $table = $('#receiptsTbl')
+var $form = $('#receiptsForm')
 var index = 0;
 $(function() {
     $table.bootstrapTable();
@@ -10,13 +10,12 @@ $(function() {
     $form.on("submit", (event) => {
         event.preventDefault();
         var data = getFormData($form);
-        var ultimoNr = parseInt(data.UltimoNr);
-        if (isNaN(ultimoNr)) ultimoNr = 0;
+        var LastNo = parseInt(data.LastNo);
+        if (isNaN(LastNo)) LastNo = 0;
 
-        if ((index == 0) || (index < parseInt(data.UltimoNr)))
-            index = ultimoNr + 1;
-        console.log(data);
-        data.nr = BuildNos();
+        if ((index == 0) || (index < parseInt(data.LastNo)))
+            index = LastNo + 1;
+        data.No = BuildNos();
         $table.bootstrapTable('insertRow', {
             index: index,
             row: data
@@ -25,7 +24,7 @@ $(function() {
         return false;
     })
 
-    $("#printRicevute").on("click", () => {
+    $("#printReceipts").on("click", () => {
         var data = $table.bootstrapTable('getData');
         $("#Links").empty();
         var template = $("#template").clone().removeAttr("style").html();
@@ -41,9 +40,7 @@ $(function() {
         var res = document.getElementById('all').getElementsByClassName('Content')
         Array.prototype.forEach.call(res, function(elem) {
             console.log(elem);
-            var useWidth = elem.scrollWidth;
-            var useHeight = elem.scrollHeight;
-            domtoimage.toPng(elem).then(function (dataUrl) {
+            domtoimage.toPng(elem).then(function(dataUrl) {
                 $("#Links").append("<a download='" + elem.getAttribute("data-id") + "' href='" + dataUrl + "'>" + elem.getAttribute("data-id") + "</a><br>");
                 elem.remove();
             })
@@ -59,10 +56,10 @@ $(function() {
         let tmpElement = $('<textarea style="opacity:0;"></textarea>');
         var data = $table.bootstrapTable('getData');
         for (var element in data) {
-            tmpElement.append(data[element]["nr"] + '\t');
-            tmpElement.append(data[element]["data"] + '\t');
-            tmpElement.append(data[element]["causale"] + '\t');
-            tmpElement.append(data[element]["totale"] + '\t\n');
+            tmpElement.append(data[element]["No"] + '\t');
+            tmpElement.append(data[element]["Date"] + '\t');
+            tmpElement.append(data[element]["Reason"] + '\t');
+            tmpElement.append(data[element]["Total"] + '\t\n');
         }
         tmpElement.appendTo($('body')).focus().select();
         document.execCommand("copy");
