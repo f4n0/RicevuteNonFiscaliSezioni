@@ -5,7 +5,7 @@ $(function() {
     $table.bootstrapTable();
     $("#datepicker").datepicker({
         dateFormat: 'dd/mm/yy'
-    });
+    }).datepicker("setDate", new Date());
 
     $form.on("submit", (event) => {
         event.preventDefault();
