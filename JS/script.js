@@ -39,8 +39,13 @@ $(function() {
         };
         var res = document.getElementById('all').getElementsByClassName('Content')
         Array.prototype.forEach.call(res, function(elem) {
-            console.log(elem);
-            domtoimage.toPng(elem).then(function(dataUrl) {
+            var useWidth = elem.scrollWidth;
+            var useHeight = elem.scrollHeight;
+            var options = {
+                width: useWidth,
+                height: useHeight
+            }
+            domtoimage.toPng(elem, options).then(function(dataUrl) {
                 $("#Links").append("<a download='" + elem.getAttribute("data-id") + "' href='" + dataUrl + "'>" + elem.getAttribute("data-id") + "</a><br>");
                 elem.remove();
             })
