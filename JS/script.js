@@ -25,6 +25,7 @@ $(function() {
     })
 
     $("#printReceipts").on("click", () => {
+        addSignatureToTemplate();
         var data = $table.bootstrapTable('getData');
         $("#Links").empty();
         var template = $("#template").clone().removeAttr("style").html();
@@ -92,4 +93,58 @@ function getFormData($form) {
     });
 
     return indexed_array;
+}
+
+// start signature
+
+var canvas = document.querySelector("canvas");
+
+var signaturePad = new SignaturePad(canvas);
+
+function resizeCanvas() {
+    // When zoomed out to less than 100%, for some very strange reason,
+    // some browsers report devicePixelRatio as less than 1
+    // and only part of the canvas is cleared then.
+    var ratio = Math.max(window.devicePixelRatio || 1, 1);
+    canvas.width = canvas.offsetWidth * ratio;
+    canvas.height = canvas.offsetHeight * ratio;
+    canvas.getContext("2d").scale(ratio, ratio);
+}
+
+window.onresize = resizeCanvas;
+resizeCanvas();
+
+function addSignatureToTemplate() {
+    if (signaturePad.isEmpty()) {
+        return alert("Please provide a signature first.");
+    }
+
+    var data = signaturePad.toDataURL('image/png');
+    console.log(data);
+    document.getElementById("ReceiptSignature").src = data;
+}
+
+function ClearSignaturePad() {
+    signaturePad.clear();
+}
+
+function ImportSignature() {
+    ClearSignaturePad()
+    $("#ImportExistingSignature").click();
+}
+$("#ImportExistingSignature").on("change", function() {
+    var reader = new FileReader();
+    reader.onload = imageIsLoaded;
+    reader.readAsDataURL($("#ImportExistingSignature")[0].files[0]);
+
+})
+
+function Test() {
+    var data = signaturePad.toDataURL('image/png');
+    console.log(data);
+    document.getElementById("ReceiptSignature").src = data;
+}
+
+function imageIsLoaded(e) {
+    signaturePad.fromDataURL(e.target.result);
 }

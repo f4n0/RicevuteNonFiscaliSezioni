@@ -69,3 +69,33 @@
     padding-left: 10px;
     background-color: #f0f0f0;
 }
+
+.wrapper {
+    position: relative;
+    width: 400px;
+    height: 50px;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid green;
+    box-sizing: content-box;
+}
+
+.signature-pad {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 400px;
+    height: 50px;
+    background-color: white;
+}
+
+#ReceiptSignature {
+    height: 40px;
+}
+
+#Links {
+    overflow-y: scroll;
+    height: 200px;
+}

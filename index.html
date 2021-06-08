@@ -14,6 +14,8 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
     <script src="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
+
     <script src="JS/dom-to-image.min.js"></script>
 </head>
 
@@ -71,6 +73,16 @@
                 </form>
             </div>
             <div class="col-md-6 mt-2">
+                <div>
+                    <h4>Ricorda!</h4>
+                    <p>Le ricevute devono essere firmate, qua sotto hai la possibilità di firmare (o di <a href="#" onclick="ImportSignature()">importarne una esistente</a>):</p>
+                    <div class="wrapper">
+                        <img id="ExistingSignature">
+                        <canvas id="signature-pad" class="signature-pad" width=400 height=50></canvas>
+                    </div>
+                    <button type="button" class="btn btn-secondary" onclick="ClearSignaturePad()">Pulisci</button>
+                    <input type="file" id="ImportExistingSignature" name="ImportExistingSignature" hidden style="position: absolute; display: none;" />
+                </div><br>
                 <div id="out_image">
                     <h4>Ricevute:</h4>
                     <button type="button" class="btn btn-secondary" id="DownloadAll">Scarica tutto</button><br>
@@ -142,7 +154,10 @@
                     </div>
                 </div>
                 <div class="row mt-3">
-                    <div class="col"></div>
+                    <div class="col withBottomLine">
+                        <h4>Firma:</h4>
+                        <img id="ReceiptSignature" />
+                    </div>
                     <div class="col withBottomLine">
                         <h3>TOTALE:</h3>
                         <div class="bottomline-full value">{{Total}}</div>
