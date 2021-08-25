@@ -54,8 +54,9 @@ $(function() {
             }
             domtoimage.toPng(elem, options).then(function(dataUrl) {
                 // $("#Links").append("<a download='" + elem.getAttribute("data-id") + "' href='" + dataUrl + "'>" + elem.getAttribute("data-id") + "</a><br>");
-                // elem.remove();
-                downloadURI(dataUrl, elem.getAttribute("data-id"))
+                // 
+                downloadURI(dataUrl, elem.getAttribute("data-id"));
+                elem.remove();
             })
         });
 
