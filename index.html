@@ -27,30 +27,34 @@
             <br> Bene questo sito fa per te!</p>
         <hr>
         <div class="row">
-            <div class="col-md-6 mt-2">
+            <div class="col-md-12 mt-2">
+                <div>
+                    <h4>Firma</h4>
+                    <p>Le ricevute devono essere firmate, qua sotto hai la possibilità di firmare (o di <a href="#" onclick="ImportSignature()">importarne una esistente</a>):</p>
+                    <div class="wrapper">
+                        <img id="ExistingSignature">
+                        <canvas id="signature-pad" class="signature-pad" width=500 height=100></canvas>
+                    </div><br>
+                    <button type="button" class="btn btn-secondary" onclick="ClearSignaturePad()">Pulisci</button>
+                    <button type="button" class="btn btn-secondary" onclick="SaveSignature()">Salva</button>
+                    <input type="file" id="ImportExistingSignature" name="ImportExistingSignature" hidden style="position: absolute; display: none;" />
+                </div><br>
+
                 <h3>Inserisci</h3>
                 <br>
                 <form id="receiptsForm" action="post">
                     <div class="row">
-                        <div class="col">
+                        <div class="col-2">
                             <label for="prezzo">Ultimo Nr: </label>
                             <input type="text" class="form-control" placeholder="Ultimo Nr" name="LastNo" autocomplete="off">
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
+                        <div class="col-3">
                             <label for="Date">Data: </label>
                             <input type="text" class="form-control" id="datepicker" placeholder="Data" name="Date" autocomplete="off" required>
                         </div>
-                        <div class="col">
+                        <div class="col-7">
                             <label for="Holder">Intestatario: </label>
                             <input type="text" class="form-control" placeholder="Intestatario" name="Holder" autocomplete="off" required>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <label for="Price">Prezzo (in lettere): </label>
-                            <input type="text" class="form-control" placeholder="Prezzo" name="Price" autocomplete="off" required>
                         </div>
                     </div>
                     <div class="row">
@@ -61,8 +65,14 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <label for="Total">Totale: </label>
-                            <input type="number" class="form-control" placeholder="Totale" name="Total" autocomplete="off" required>
+                            <label for="Price">Prezzo (in lettere): </label>
+                            <input type="text" class="form-control" placeholder="Prezzo" name="Price" autocomplete="off" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="Total">Totale (in cifre): </label>
+                            <input type="number" class="form-control" placeholder="Totale" name="Total" autocomplete="off" required step="any">
                         </div>
                     </div>
                     <div class="row mt-4">
@@ -73,26 +83,17 @@
                 </form>
             </div>
             <div class="col-md-6 mt-2">
-                <div>
-                    <h4>Ricorda!</h4>
-                    <p>Le ricevute devono essere firmate, qua sotto hai la possibilità di firmare (o di <a href="#" onclick="ImportSignature()">importarne una esistente</a>):</p>
-                    <div class="wrapper">
-                        <img id="ExistingSignature">
-                        <canvas id="signature-pad" class="signature-pad" width=400 height=50></canvas>
-                    </div>
-                    <button type="button" class="btn btn-secondary" onclick="ClearSignaturePad()">Pulisci</button>
-                    <input type="file" id="ImportExistingSignature" name="ImportExistingSignature" hidden style="position: absolute; display: none;" />
-                </div><br>
-                <div id="out_image">
+
+                <div id="out_image" hidden>
                     <h4>Ricevute:</h4>
-                    <button type="button" class="btn btn-secondary" id="DownloadAll">Scarica tutto</button><br>
+                    <br>
                     <div id="Links"></div>
                 </div>
             </div>
         </div>
         <br>
         <hr>
-        <h4>Dati:</h4>
+        <h4>Dati</h4>
         <div id="toolbar">
             <button type="button" class="btn btn-secondary" id="printReceipts">Stampa Ricevute</button>
             <button type="button" class="btn btn-secondary" id="CopyExcel">Copia per Excel</button>
@@ -100,75 +101,81 @@
         <table id="receiptsTbl" data-toolbar="#toolbar">
             <thead>
                 <tr>
-                    <th data-field="No">Nr.</th>
-                    <th data-field="Date">Data</th>
-                    <th data-field="Holder">Intestatario</th>
-                    <th data-field="Price">Prezzo</th>
-                    <th data-field="Reason">Causale</th>
-                    <th data-field="Total">Totale</th>
+                    <th data-field="No" data-editable="true">Nr.</th>
+                    <th data-field="Date" data-editable="true">Data</th>
+                    <th data-field="Holder" data-editable="true">Intestatario</th>
+                    <th data-field="Price" data-editable="true">Prezzo</th>
+                    <th data-field="Reason" data-editable="true">Causale</th>
+                    <th data-field="Total" data-editable="true">Totale</th>
                 </tr>
             </thead>
         </table>
-    </div>
 
-    <div id="template" style="display: none;">
-        <div class="Content" data-id="{{No}}">
-            <div class="receiptContainer">
-                <div class="row">
-                    <div class="col">
-                        <img src="Images/Cngei_Sezioni48.png" width="100" height="100" crossorigin="use-credentials">
-                    </div>
-                    <div class="col allRight ">
-                        <div class="allInLine">
-                            <h3>RICEVUTA</h3>
-                            <h4>n.</h4>
-                            <div class="bottomline-small value">{{No}}</div>
+        <br>
+
+        <br>
+        <div id="template" style="display: none;">
+            <div class="Content" data-id="{{No}}">
+                <div class="receiptContainer">
+                    <div class="row">
+                        <div class="col">
+                            <img src="Images/Cngei_Sezioni48.png" width="100" height="100" crossorigin="use-credentials">
+                        </div>
+                        <div class="col allRight ">
+                            <div class="allInLine">
+                                <h3>RICEVUTA</h3>
+                                <h4>n.</h4>
+                                <div class="bottomline-small value">{{No}}</div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="linebreak"></div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col withBottomLine">
-                        <h4>Ricevuti da:</h4>
-                        <div class="bottomline-full value">{{Holder}}</div>
+                    <div class="row">
+                        <div class="linebreak"></div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col withBottomLine">
+                            <h4>Ricevuti da:</h4>
+                            <div class="bottomline-full value">{{Holder}}</div>
+                        </div>
+                    </div>
+                    <div class="row mt-1">
+                        <div class="col withBottomLine">
+                            <h4>Data:</h4>
+                            <div class="bottomline-full value">{{Date}}</div>
+                        </div>
+                    </div>
+                    <div class="row mt-1">
+                        <div class="col withBottomLine">
+                            <h4>€:</h4>
+                            <div class="bottomline-full value">{{Price}}</div>
+                        </div>
+                    </div>
+                    <div class="row mt-1">
+                        <div class="col withBottomLine">
+                            <h4>Causale:</h4>
+                            <div class="bottomline-full value">{{Reason}}</div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col withBottomLine">
+                            <h4>Firma:</h4>
+                            <img id="ReceiptSignature" />
+                        </div>
+                        <div class="col withBottomLine">
+                            <h3>TOTALE:</h3>
+                            <div class="bottomline-full value">{{Total}}</div>
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                        <p class="bollo">Esente da bollo ai sensi dell'art. 82 co.5 D Lgs 117/2017</p>
                     </div>
                 </div>
-                <div class="row mt-1">
-                    <div class="col withBottomLine">
-                        <h4>Data:</h4>
-                        <div class="bottomline-full value">{{Date}}</div>
-                    </div>
-                </div>
-                <div class="row mt-1">
-                    <div class="col withBottomLine">
-                        <h4>€:</h4>
-                        <div class="bottomline-full value">{{Price}}</div>
-                    </div>
-                </div>
-                <div class="row mt-1">
-                    <div class="col withBottomLine">
-                        <h4>Causale:</h4>
-                        <div class="bottomline-full value">{{Reason}}</div>
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col withBottomLine">
-                        <h4>Firma:</h4>
-                        <img id="ReceiptSignature" />
-                    </div>
-                    <div class="col withBottomLine">
-                        <h3>TOTALE:</h3>
-                        <div class="bottomline-full value">{{Total}}</div>
-                    </div>
-                </div>
-                <div class="row mt-4">
-                    <p class="bollo">Esente da bollo ai sensi dell'art. 82 co.5 D Lgs 117/2017</p>
-                </div>
+                <br>
             </div>
         </div>
     </div>
+
+
 
     <div id="all"></div>
 

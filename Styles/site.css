@@ -54,14 +54,16 @@
     border: 2px solid green;
     padding: 15px;
     overflow: hidden;
-    width: 1000px;
+    margin: 20px;
     background-color: white;
 }
 
+
+/* 
 .Content {
     width: 1000px;
     padding: 50px;
-}
+} */
 
 .value {
     font-size: large;
@@ -72,8 +74,8 @@
 
 .wrapper {
     position: relative;
-    width: 400px;
-    height: 50px;
+    width: 500px;
+    height: 100px;
     -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
@@ -86,8 +88,8 @@
     position: absolute;
     left: 0;
     top: 0;
-    width: 400px;
-    height: 50px;
+    width: 500px;
+    height: 100px;
     background-color: white;
 }
 

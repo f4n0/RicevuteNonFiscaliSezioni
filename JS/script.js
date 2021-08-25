@@ -3,6 +3,12 @@ var $form = $('#receiptsForm')
 var index = 0;
 $(function() {
     $table.bootstrapTable();
+
+    let OldSignature = localStorage.getItem("Signature");
+    if (OldSignature) {
+        signaturePad.fromDataURL(OldSignature);
+    }
+
     $("#datepicker").datepicker({
         dateFormat: 'dd/mm/yy'
     }).datepicker("setDate", new Date());
@@ -14,7 +20,7 @@ $(function() {
         if (isNaN(LastNo)) LastNo = 0;
 
         if ((index == 0) || (index < parseInt(data.LastNo)))
-            index = LastNo + 1;
+            index = LastNo;
         data.No = BuildNos();
         $table.bootstrapTable('insertRow', {
             index: index,
@@ -47,16 +53,27 @@ $(function() {
                 height: useHeight
             }
             domtoimage.toPng(elem, options).then(function(dataUrl) {
-                $("#Links").append("<a download='" + elem.getAttribute("data-id") + "' href='" + dataUrl + "'>" + elem.getAttribute("data-id") + "</a><br>");
-                elem.remove();
+                // $("#Links").append("<a download='" + elem.getAttribute("data-id") + "' href='" + dataUrl + "'>" + elem.getAttribute("data-id") + "</a><br>");
+                // elem.remove();
+                downloadURI(dataUrl, elem.getAttribute("data-id"))
             })
         });
 
+
+        // var ele = $("#Links a");
+        // ele.each(elem => ele[elem].click())
+
     });
-    $("#DownloadAll").on("click", () => {
-        var ele = $("#Links a");
-        ele.each(elem => ele[elem].click())
-    });
+
+    function downloadURI(uri, name) {
+        var link = document.createElement("a");
+        link.download = name;
+        link.href = uri;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        delete link;
+    }
 
     $("#CopyExcel").click(function() {
         let tmpElement = $('<textarea style="opacity:0;"></textarea>');
@@ -126,24 +143,29 @@ function addSignatureToTemplate() {
 
 function ClearSignaturePad() {
     signaturePad.clear();
+    localStorage.removeItem("Signature");
+}
+
+function SaveSignature() {
+    if (signaturePad.isEmpty()) {
+        return alert("Please provide a signature first.");
+    }
+
+    var data = signaturePad.toDataURL('image/png');
+    localStorage.setItem("Signature", data);
 }
 
 function ImportSignature() {
     ClearSignaturePad()
     $("#ImportExistingSignature").click();
 }
+
 $("#ImportExistingSignature").on("change", function() {
     var reader = new FileReader();
     reader.onload = imageIsLoaded;
     reader.readAsDataURL($("#ImportExistingSignature")[0].files[0]);
 
 })
-
-function Test() {
-    var data = signaturePad.toDataURL('image/png');
-    console.log(data);
-    document.getElementById("ReceiptSignature").src = data;
-}
 
 function imageIsLoaded(e) {
     signaturePad.fromDataURL(e.target.result);
