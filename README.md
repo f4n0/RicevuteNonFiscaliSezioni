@@ -12,4 +12,4 @@ Utilizzato dalla Sezione CNGEI di Torino per facilitare la generazione di ricevu
 
 
 # Fac-Simile
-![Ricevuta d'esempio](Misc\Sample.png?raw=true "Ricevuta d'esempio")
+![Ricevuta d'esempio](Misc/Sample.png?raw=true "Ricevuta d'esempio")
