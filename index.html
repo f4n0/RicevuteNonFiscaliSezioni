@@ -11,20 +11,18 @@
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.css">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="Styles/site.css">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-    <script src="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
     <script src="JS/dom-to-image.min.js"></script>
 </head>
 
 <body>
     <div class="container mt-4">
         <h1>Genera Ricevute</h1>
-        <p>
-            Ehi anche tu vuoi generare della fatture non fiscali in modo semplice e veloce da un sito ed esportarli come immagini?
-            <br> Bene questo sito fa per te!</p>
         <hr>
         <div class="row">
             <div class="col-md-12 mt-2">
@@ -45,8 +43,8 @@
                 <form id="receiptsForm" action="post">
                     <div class="row">
                         <div class="col-2">
-                            <label for="prezzo">Ultimo Nr: </label>
-                            <input type="text" class="form-control" placeholder="Ultimo Nr" name="LastNo" autocomplete="off">
+                            <label for="prezzo">Nr: </label>
+                            <input type="text" class="form-control" placeholder="Nr." name="LastNo" autocomplete="off">
                         </div>
                         <div class="col-3">
                             <label for="Date">Data: </label>
