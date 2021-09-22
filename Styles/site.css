@@ -102,3 +102,11 @@
     overflow-y: scroll;
     height: 200px;
 }
+
+#SignatureCollapser[aria-expanded=false] .text-expanded {
+    display: none;
+}
+
+#SignatureCollapser[aria-expanded=true] .text-collapsed {
+    display: none;
+}
