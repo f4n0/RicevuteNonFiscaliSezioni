@@ -89,6 +89,12 @@ $(function() {
         tmpElement.remove();
     });
 
+    $('input[name="Total"]').on('input', function() {
+        let tot = $('input[name="Total"]').val();
+        $('input[name="Price"]').val(sgart.convNumLett(tot, false, false));
+
+    });
+
 
 })
 
