@@ -1,8 +1,25 @@
 var $table = $('#receiptsTbl')
 var $form = $('#receiptsForm')
 var index = 0;
+var signaturePad, canvas;
 $(function() {
     $table.bootstrapTable();
+
+    canvas = document.querySelector("canvas");
+    signaturePad = new SignaturePad(canvas);
+
+    /* function resizeCanvas() {
+         // When zoomed out to less than 100%, for some very strange reason,
+         // some browsers report devicePixelRatio as less than 1
+         // and only part of the canvas is cleared then.
+         var ratio = Math.max(window.devicePixelRatio || 1, 1);
+         canvas.width = canvas.offsetWidth * ratio;
+         canvas.height = canvas.offsetHeight * ratio;
+         canvas.getContext("2d").scale(ratio, ratio);
+     }
+
+     window.onresize = resizeCanvas;
+     resizeCanvas();*/
 
     let OldSignature = localStorage.getItem("Signature");
     if (OldSignature) {
@@ -120,22 +137,7 @@ function getFormData($form) {
 
 // start signature
 
-var canvas = document.querySelector("canvas");
 
-var signaturePad = new SignaturePad(canvas);
-
-function resizeCanvas() {
-    // When zoomed out to less than 100%, for some very strange reason,
-    // some browsers report devicePixelRatio as less than 1
-    // and only part of the canvas is cleared then.
-    var ratio = Math.max(window.devicePixelRatio || 1, 1);
-    canvas.width = canvas.offsetWidth * ratio;
-    canvas.height = canvas.offsetHeight * ratio;
-    canvas.getContext("2d").scale(ratio, ratio);
-}
-
-window.onresize = resizeCanvas;
-resizeCanvas();
 
 function addSignatureToTemplate() {
     if (signaturePad.isEmpty()) {
@@ -162,6 +164,7 @@ function SaveSignature() {
 }
 
 function ImportSignature() {
+    $("#ImportExistingSignature").val("")
     ClearSignaturePad()
     $("#ImportExistingSignature").click();
 }
@@ -174,5 +177,6 @@ $("#ImportExistingSignature").on("change", function() {
 })
 
 function imageIsLoaded(e) {
-    signaturePad.fromDataURL(e.target.result);
+    if (e.target.result.length > 0)
+        signaturePad.fromDataURL(e.target.result, { ratio: 1 });
 }
