@@ -48,37 +48,34 @@ $(function() {
     })
 
     $("#printReceipts").on("click", () => {
-        addSignatureToTemplate();
-        var data = $table.bootstrapTable('getData');
-        $("#Links").empty();
-        var template = $("#template").clone().removeAttr("style").html();
-        var $content = $("#all");
+        var ret = addSignatureToTemplate();
+        if (ret) {
+            var data = $table.bootstrapTable('getData');
+            $("#Links").empty();
+            var template = $("#template").clone().removeAttr("style").html();
+            var $content = $("#all");
 
-        for (var element in data) {
-            var edited = template
-            Object.keys(data[element]).forEach(val => {
-                edited = edited.replaceAll("{{" + val + "}}", data[element][val]);
-            })
-            $content.append(edited)
-        };
-        var res = document.getElementById('all').getElementsByClassName('Content')
-        Array.prototype.forEach.call(res, function(elem) {
-            var useWidth = elem.scrollWidth;
-            var useHeight = elem.scrollHeight;
-            var options = {
-                width: useWidth,
-                height: useHeight
-            }
-            domtoimage.toPng(elem, options).then(function(dataUrl) {
-                // $("#Links").append("<a download='" + elem.getAttribute("data-id") + "' href='" + dataUrl + "'>" + elem.getAttribute("data-id") + "</a><br>");
-                downloadURI(dataUrl, elem.getAttribute("data-id"));
-                elem.remove();
-            })
-        });
-
-
-        // var ele = $("#Links a");
-        // ele.each(elem => ele[elem].click())
+            for (var element in data) {
+                var edited = template
+                Object.keys(data[element]).forEach(val => {
+                    edited = edited.replaceAll("{{" + val + "}}", data[element][val]);
+                })
+                $content.append(edited)
+            };
+            var res = document.getElementById('all').getElementsByClassName('Content')
+            Array.prototype.forEach.call(res, function(elem) {
+                var useWidth = elem.scrollWidth;
+                var useHeight = elem.scrollHeight;
+                var options = {
+                    width: useWidth,
+                    height: useHeight
+                }
+                domtoimage.toPng(elem, options).then(function(dataUrl) {
+                    downloadURI(dataUrl, elem.getAttribute("data-id"));
+                    elem.remove();
+                })
+            });
+        }
 
     });
 
@@ -141,12 +138,14 @@ function getFormData($form) {
 
 function addSignatureToTemplate() {
     if (signaturePad.isEmpty()) {
-        return alert("Please provide a signature first.");
+        alert("Please provide a signature first.");
+        return false;
     }
 
     var data = signaturePad.toDataURL('image/png');
     console.log(data);
     document.getElementById("ReceiptSignature").src = data;
+    return true;
 }
 
 function ClearSignaturePad() {
