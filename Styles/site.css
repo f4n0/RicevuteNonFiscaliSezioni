@@ -110,3 +110,11 @@
 #SignatureCollapser[aria-expanded=true] .text-collapsed {
     display: none;
 }
+
+#HelpCollapser[aria-expanded=false] .text-expanded {
+    display: none;
+}
+
+#HelpCollapser[aria-expanded=true] .text-collapsed {
+    display: none;
+}
