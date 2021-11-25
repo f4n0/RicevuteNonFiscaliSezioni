@@ -20,17 +20,11 @@ $(function() {
     $form.on("submit", (event) => {
         event.preventDefault();
         var data = getFormData($form);
-        var LastNo = parseInt(data.LastNo);
-        if (isNaN(LastNo)) LastNo = 0;
-
-        if ((index == 0) || (index < parseInt(data.LastNo)))
-            index = LastNo;
-        data.No = BuildNos();
-        $table.bootstrapTable('insertRow', {
-            index: index,
-            row: data
-        });
-        index++;
+        console.log($form)
+        data.No = BuildNos(data.LastNo);
+        document.getElementsByName("LastNo")[0].value = IncreaseNos(data.No);
+        $table.bootstrapTable('append', data);
+        
         return false;
     })
 
@@ -99,8 +93,18 @@ $(function() {
 
 })
 
-function BuildNos() {
-    return pad(index, 5)
+function BuildNos(value) {
+    var intvalue = parseInt((/([0-9]){1,}/g.exec(value))[0]) ;
+    var paddedVal = pad(intvalue,5);
+    var newVal = value.replace(/([0-9]){1,}/, paddedVal);
+    return newVal;
+}
+
+function IncreaseNos(value) {
+    var intvalue = parseInt((/([0-9]){1,}/g.exec(value))[0]) + 1;
+    var paddedVal = pad(intvalue,5);
+    var newVal = value.replace(/([0-9]){1,}/, paddedVal);
+    return newVal;
 }
 
 function pad(str, max) {
@@ -130,7 +134,6 @@ function addSignatureToTemplate() {
     }
 
     var data = signaturePad.toDataURL('image/png');
-    console.log(data);
     document.getElementById("ReceiptSignature").src = data;
     return true;
 }
