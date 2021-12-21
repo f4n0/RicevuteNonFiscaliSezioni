@@ -51,7 +51,7 @@
                                     salva</strong>
                             </li>
                             <li><strong>Data</strong></li>
-                            <li><strong>Intestatario</strong></li>
+                            <li><strong>Intestatari:</strong> Aggiungere i nomi degli intestatari uno per ogni riga (andando a capo ad ogni nome)</li>
                             <li><strong>Causale</strong></li>
                             <li><strong>Importo</strong></li>
                         </ul>
@@ -98,45 +98,51 @@
                 <br>
                 <form id="receiptsForm" action="post">
                     <div class="row">
-                        <div class="col-sm">
-                            <label for="prezzo">Nr: </label>
-                            <input type="text" class="form-control" placeholder="Nr." name="LastNo" autocomplete="off">
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="col-sm">
+                                    <label for="prezzo">Nr: </label>
+                                    <input type="text" class="form-control" placeholder="Nr." name="LastNo"
+                                        autocomplete="off">
+                                </div>
+                                <div class="col-sm">
+                                    <label for="Date">Data: </label>
+                                    <input type="text" class="form-control" id="datepicker" placeholder="Data"
+                                        name="Date" autocomplete="off" required>
+                                </div>                                
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <label for="Reason">Causale: </label>
+                                    <input type="text" class="form-control" placeholder="Causale" name="Reason"
+                                        autocomplete="off" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <label for="Price">Importo (in lettere): </label>
+                                    <input type="text" class="form-control" placeholder="Prezzo" name="Price"
+                                        autocomplete="off" required readonly>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <label for="Total">Importo (in cifre): </label>
+                                    <input type="number" class="form-control" placeholder="Totale" name="Total"
+                                        autocomplete="off" required step="any">
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col">
+                                    <input type="submit" class="btn btn-success" value="Salva">
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-sm">
-                            <label for="Date">Data: </label>
-                            <input type="text" class="form-control" id="datepicker" placeholder="Data" name="Date"
-                                autocomplete="off" required>
-                        </div>
-                        <div class="col-md">
-                            <label for="Holder">Intestatario: </label>
-                            <input type="text" class="form-control" placeholder="Intestatario" name="Holder"
-                                autocomplete="off" required>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <label for="Reason">Causale: </label>
-                            <input type="text" class="form-control" placeholder="Causale" name="Reason"
-                                autocomplete="off" required>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <label for="Price">Importo (in lettere): </label>
-                            <input type="text" class="form-control" placeholder="Prezzo" name="Price" autocomplete="off"
-                                required readonly>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <label for="Total">Importo (in cifre): </label>
-                            <input type="number" class="form-control" placeholder="Totale" name="Total"
-                                autocomplete="off" required step="any">
-                        </div>
-                    </div>
-                    <div class="row mt-4">
-                        <div class="col">
-                            <input type="submit" class="btn btn-success" value="Salva">
+                        <div class="col-6">
+                                <label for="Holder">Intestatari (uno per riga): </label>
+                                <textarea class="form-control" placeholder="Intestatario" name="Holder"
+                                    autocomplete="off" required style="height: 80%;"></textarea>
+                            
                         </div>
                     </div>
                 </form>

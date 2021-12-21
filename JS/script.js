@@ -19,11 +19,33 @@ $(function() {
 
     $form.on("submit", (event) => {
         event.preventDefault();
-        var data = getFormData($form);
-        console.log($form)
-        data.No = BuildNos(data.LastNo);
-        document.getElementsByName("LastNo")[0].value = IncreaseNos(data.No);
-        $table.bootstrapTable('append', data);
+        var data = getFormData($form);   
+        var holders = data.Holder.split("\r\n");
+        var tempNos = BuildNos(data.LastNo)
+        var dataArr = [];
+        for(var single in holders)
+        {
+           /* var builded = data;
+            builded.Holder = holders[single];
+            builded.No = tempNos;*/
+            
+           var builded = {
+                "LastNo": tempNos,
+                "Date": data.Date,
+                "Holder": holders[single],
+                "Reason": data.Reason,
+                "Price": data.Price,
+                "Total": data.Total,
+                "No": tempNos
+            };
+            console.log(builded);
+            dataArr.push(builded);
+            tempNos = IncreaseNos(tempNos);
+        }
+        console.log(dataArr)
+        $table.bootstrapTable('append', dataArr);
+        
+        document.getElementsByName("LastNo")[0].value = tempNos;
         
         return false;
     })
@@ -94,6 +116,8 @@ $(function() {
 })
 
 function BuildNos(value) {
+    if(value == "") value = "0";
+
     var intvalue = parseInt((/([0-9]){1,}/g.exec(value))[0]) ;
     var paddedVal = pad(intvalue,5);
     var newVal = value.replace(/([0-9]){1,}/, paddedVal);
