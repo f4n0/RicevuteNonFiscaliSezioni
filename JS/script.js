@@ -25,10 +25,6 @@ $(function() {
         var dataArr = [];
         for(var single in holders)
         {
-           /* var builded = data;
-            builded.Holder = holders[single];
-            builded.No = tempNos;*/
-            
            var builded = {
                 "LastNo": tempNos,
                 "Date": data.Date,
@@ -67,11 +63,9 @@ $(function() {
             };
             var res = document.getElementById('all').getElementsByClassName('Content')
             Array.prototype.forEach.call(res, function(elem) {
-                var useWidth = elem.scrollWidth;
-                var useHeight = elem.scrollHeight;
                 var options = {
-                    width: useWidth,
-                    height: useHeight
+                    width: 1920,
+                    height: 500
                 }
                 domtoimage.toPng(elem, options).then(function(dataUrl) {
                     downloadURI(dataUrl, elem.getAttribute("data-id"));
