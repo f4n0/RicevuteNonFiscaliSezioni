@@ -2,7 +2,7 @@ var $table = $('#receiptsTbl')
 var $form = $('#receiptsForm')
 var index = 0;
 var signaturePad, canvas;
-$(function() {
+$(function () {
     $table.bootstrapTable();
 
     canvas = document.querySelector("canvas");
@@ -19,13 +19,12 @@ $(function() {
 
     $form.on("submit", (event) => {
         event.preventDefault();
-        var data = getFormData($form);   
+        var data = getFormData($form);
         var holders = data.Holder.split("\r\n");
         var tempNos = BuildNos(data.LastNo)
         var dataArr = [];
-        for(var single in holders)
-        {
-           var builded = {
+        for (var single in holders) {
+            var builded = {
                 "LastNo": tempNos,
                 "Date": data.Date,
                 "Holder": holders[single],
@@ -34,15 +33,13 @@ $(function() {
                 "Total": data.Total,
                 "No": tempNos
             };
-            console.log(builded);
             dataArr.push(builded);
             tempNos = IncreaseNos(tempNos);
         }
-        console.log(dataArr)
         $table.bootstrapTable('append', dataArr);
-        
+
         document.getElementsByName("LastNo")[0].value = tempNos;
-        
+
         return false;
     })
 
@@ -61,17 +58,26 @@ $(function() {
                 })
                 $content.append(edited)
             };
-            var res = document.getElementById('all').getElementsByClassName('Content')
-            Array.prototype.forEach.call(res, function(elem) {
+            var res = document.getElementById('all').getElementsByClassName('Content');
+
+            var zip = new JSZip();
+            Array.prototype.forEach.call(res, function (elem) {
                 var options = {
                     width: 1920,
                     height: 500
                 }
-                domtoimage.toPng(elem, options).then(function(dataUrl) {
-                    downloadURI(dataUrl, elem.getAttribute("data-id"));
+                domtoimage.toPng(elem, options).then(function (dataUrl) {
+                    zip.file(elem.getAttribute("data-id")+".png", dataUrl.split(',')[1], { base64: true });
+                    //downloadURI(dataUrl, elem.getAttribute("data-id"));
                     elem.remove();
+                    if (res.length == 0) {
+                        zip.generateAsync({ type: "base64" }).then(function (base64) {
+                            downloadURI("data:application/zip;base64," + base64, "ricevute.zip");
+                        });
+                    }
                 })
             });
+
         }
 
     });
@@ -86,7 +92,7 @@ $(function() {
         delete link;
     }
 
-    $("#CopyExcel").click(function() {
+    $("#CopyExcel").click(function () {
         let tmpElement = $('<textarea style="opacity:0;"></textarea>');
         var data = $table.bootstrapTable('getData');
         for (var element in data) {
@@ -100,7 +106,7 @@ $(function() {
         tmpElement.remove();
     });
 
-    $('input[name="Total"]').on('input', function() {
+    $('input[name="Total"]').on('input', function () {
         let tot = $('input[name="Total"]').val();
         $('input[name="Price"]').val(sgart.convNumLett(tot, false, false));
 
@@ -110,17 +116,17 @@ $(function() {
 })
 
 function BuildNos(value) {
-    if(value == "") value = "0";
+    if (value == "") value = "0";
 
-    var intvalue = parseInt((/([0-9]){1,}/g.exec(value))[0]) ;
-    var paddedVal = pad(intvalue,5);
+    var intvalue = parseInt((/([0-9]){1,}/g.exec(value))[0]);
+    var paddedVal = pad(intvalue, 5);
     var newVal = value.replace(/([0-9]){1,}/, paddedVal);
     return newVal;
 }
 
 function IncreaseNos(value) {
     var intvalue = parseInt((/([0-9]){1,}/g.exec(value))[0]) + 1;
-    var paddedVal = pad(intvalue,5);
+    var paddedVal = pad(intvalue, 5);
     var newVal = value.replace(/([0-9]){1,}/, paddedVal);
     return newVal;
 }
@@ -134,7 +140,7 @@ function getFormData($form) {
     var unindexed_array = $form.serializeArray();
     var indexed_array = {};
 
-    $.map(unindexed_array, function(n, i) {
+    $.map(unindexed_array, function (n, i) {
         indexed_array[n['name']] = n['value'];
     });
 
@@ -176,7 +182,7 @@ function ImportSignature() {
     $("#ImportExistingSignature").click();
 }
 
-$("#ImportExistingSignature").on("change", function() {
+$("#ImportExistingSignature").on("change", function () {
     var reader = new FileReader();
     reader.onload = imageIsLoaded;
     reader.readAsDataURL($("#ImportExistingSignature")[0].files[0]);
