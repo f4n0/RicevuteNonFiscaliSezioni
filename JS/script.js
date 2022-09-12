@@ -67,7 +67,7 @@ $(function () {
                     height: 500
                 }
                 domtoimage.toPng(elem, options).then(function (dataUrl) {
-                    zip.file(elem.getAttribute("data-id")+".png", dataUrl.split(',')[1], { base64: true });
+                    zip.file(elem.getAttribute("data-id") + ".png", dataUrl.split(',')[1], { base64: true });
                     //downloadURI(dataUrl, elem.getAttribute("data-id"));
                     elem.remove();
                     if (res.length == 0) {
@@ -93,17 +93,16 @@ $(function () {
     }
 
     $("#CopyExcel").click(function () {
-        let tmpElement = $('<textarea style="opacity:0;"></textarea>');
+        let tmpText = "";
         var data = $table.bootstrapTable('getData');
         for (var element in data) {
-            tmpElement.append(data[element]["No"] + '\t');
-            tmpElement.append(data[element]["Date"] + '\t');
-            tmpElement.append(data[element]["Reason"] + '\t');
-            tmpElement.append(data[element]["Total"] + '\t\n');
+            tmpText += (data[element]["No"] + '\t');
+            tmpText += (data[element]["Date"] + '\t');
+            tmpText += (data[element]["Reason"] + ' - ' + data[element]["Holder"] + '\t');
+            tmpText += (data[element]["Total"] + '\t\n');
         }
-        tmpElement.appendTo($('body')).focus().select();
-        document.execCommand("copy");
-        tmpElement.remove();
+        //document.execCommand("copy");
+        navigator.clipboard.writeText(tmpText)
     });
 
     $('input[name="Total"]').on('input', function () {
