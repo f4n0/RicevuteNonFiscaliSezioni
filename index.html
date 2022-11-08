@@ -52,7 +52,8 @@
                                     salva</strong>
                             </li>
                             <li><strong>Data</strong></li>
-                            <li><strong>Ricevuti da:</strong> Aggiungere i nomi uno per ogni riga (andando a capo ad ogni nome)</li>
+                            <li><strong>Ricevuti da:</strong> Aggiungere i nomi uno per ogni riga (andando a capo ad
+                                ogni nome)</li>
                             <li><strong>Causale</strong></li>
                             <li><strong>Importo</strong></li>
                         </ul>
@@ -83,8 +84,9 @@
                             <span class="text-expanded"><i class="fas fa-chevron-up"></i></span>
                         </a></h4>
                     <div id="SignatureContainer" class="collapse">
-                        <p>Le ricevute devono essere firmate, qua sotto hai la possibilità di firmare (o di <a href="#"
-                                onclick="ImportSignature()">importarne una esistente</a>):</p>
+                        <p>Le ricevute devono essere firmate, qua sotto hai la possibilità di firmare (o di
+                            <label class="importLabel" for="ImportExistingSignature">importarne una esistente</label>):
+                        </p>
                         <div class="wrapper">
                             <canvas id="signature-pad" class="signature-pad" width=500 height=100></canvas>
                         </div><br>
@@ -110,7 +112,7 @@
                                     <label for="Date">Data: </label>
                                     <input type="text" class="form-control" id="datepicker" placeholder="Data"
                                         name="Date" autocomplete="off" required>
-                                </div>                                
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col">
@@ -132,13 +134,13 @@
                                     <input type="number" class="form-control" placeholder="Totale" name="Total"
                                         autocomplete="off" required step="any">
                                 </div>
-                            </div>                            
+                            </div>
                         </div>
                         <div class="col-sm">
-                                <label for="Holder">Ricevuti da (uno per riga): </label>
-                                <textarea class="form-control" placeholder="Intestatario" name="Holder"
-                                    autocomplete="off" required style="height: 80%;"></textarea>
-                            
+                            <label for="Holder">Ricevuti da (uno per riga): </label>
+                            <textarea class="form-control" placeholder="Intestatario" name="Holder" autocomplete="off"
+                                required style="height: 80%;"></textarea>
+
                         </div>
                     </div>
                     <div class="row mt-4">

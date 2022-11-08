@@ -31,7 +31,7 @@
     height: 200px;
 }
 
-#all{
+#all {
     width: 1920px;
     height: 500px;
 }
@@ -50,4 +50,14 @@
 
 #HelpCollapser[aria-expanded=true] .text-collapsed {
     display: none;
+}
+
+
+.importLabel {
+    color: blue;
+    cursor: pointer;
+}
+
+.importLabel:hover {
+    text-decoration: underline;
 }
