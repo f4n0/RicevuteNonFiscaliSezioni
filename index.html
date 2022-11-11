@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="it">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,7 +18,6 @@
     <script src="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.js"></script>
     <script src="JS/jszip.min.js"></script>
 </head>
-
 <body>
     <div class="container mt-4">
         <h1>Genera Ricevute</h1>
@@ -188,8 +186,12 @@
                     <div class="col-2">
                         <img src="./Images/Cngei_Sezioni48.png" width="100" height="100" crossorigin="use-credentials">
                     </div>
-                    <div class="col-5">
+                    <div class="col-5 align-self-end">
                         <h5>CNGEI Sezione Scout di Torino APS</h5>
+                        <p class="mb-0" style="font-size: 0.8rem;">
+                            Via Reiss Romoli, 49 Torino 10148  &emsp;
+                            Codice Fiscale 97583440017
+                        </p>
                     </div>
                     <div class="col-5 align-self-end">
                         <div class="row no-gutters">
@@ -241,29 +243,21 @@
                                 <input class="form-control border border-success " value="{{Reason}} " disabled>
                             </div>
                         </div>
-                        <div class="px-2 row mt-3">
-                            <div class="col ">
-                                <div class="row  align-items-center">
-                                    <div class="col-4 ">
-                                        <div class="row  align-items-center">
-                                            <div class="col-4 text-right ">
-                                                <h4>Firma:</h4>
-                                            </div>
-                                            <div class="col-8 ">
-                                                <img id="ReceiptSignature" height="50" width="250">
-                                            </div>
-                                        </div>
+
+                        <div class="px-2 row mt-3 align-items-center mt-1 ">
+                            <div class="col-2 text-right ">
+                                <h4>Firma:</h4>
+                            </div>
+                            <div class="col-4">
+                                <img id="ReceiptSignature" height="50" width="300">
+                            </div>
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-4 text-right ">
+                                        <h4>TOTALE:</h4>
                                     </div>
                                     <div class="col-8 ">
-                                        <div class="row ">
-                                            <div class="col-4 text-right ">
-                                                <h4>TOTALE:</h4>
-                                            </div>
-                                            <div class="col-8 ">
-                                                <input class="form-control border border-success" value="{{Total}} "
-                                                    disabled>
-                                            </div>
-                                        </div>
+                                        <input class="form-control border border-success" value="{{Total}} " disabled>
                                     </div>
                                 </div>
                             </div>
@@ -275,7 +269,12 @@
                         </div>
                         <div class="px-2 row">
                             <div class="col ">
-                                <p>Esente da bollo ai sensi dell'art. 82 co.5 D Lgs 117/2017</p>
+                                <p>
+                                    Esente da bollo ai sensi dell'art. 82 co.5 D Lgs 117/2017
+                                </p>
+                            </div>
+                            <div class="col">
+                                
                             </div>
                         </div>
                     </div>
