@@ -13,6 +13,11 @@ $(function () {
         signaturePad.fromDataURL(OldSignature);
     }
 
+    let latestNo = localStorage.getItem("Nos");
+    if (latestNo) {
+        document.getElementsByName("LastNo")[0].value = latestNo;
+    }
+
     $("#datepicker").datepicker({
         dateFormat: 'dd/mm/yy'
     }).datepicker("setDate", new Date());
@@ -116,17 +121,21 @@ $(function () {
 
 function BuildNos(value) {
     if (value == "") value = "0";
+    if(value.indexOf("-") != -1 ){
 
-    var intvalue = parseInt((/([0-9]){1,}/g.exec(value))[0]);
+    }
+    var intvalue = parseInt((/([0-9]){1,}(?!-)/g.exec(value))[0]);
     var paddedVal = pad(intvalue, 5);
-    var newVal = value.replace(/([0-9]){1,}/, paddedVal);
+    var newVal = value.replace(/([0-9]){1,}(?!-)/g, paddedVal);
     return newVal;
 }
 
 function IncreaseNos(value) {
-    var intvalue = parseInt((/([0-9]){1,}/g.exec(value))[0]) + 1;
+    var intvalue = parseInt((/([0-9]){1,}(?!-)/g.exec(value))[0]) + 1;
     var paddedVal = pad(intvalue, 5);
-    var newVal = value.replace(/([0-9]){1,}/, paddedVal);
+    var newVal = value.replace(/([0-9]){1,}(?!-)/g, paddedVal);
+
+    localStorage.setItem("Nos", newVal);
     return newVal;
 }
 
