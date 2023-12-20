@@ -1,5 +1,5 @@
 # RicevuteNonFiscali
-Utilizzato dalla Sezione CNGEI di Torino per facilitare la generazione di ricevute non fiscali come previsto dalla riforma del Terzo Settore.
+Fork del repository Ricevute Non fiscali. Praticamente uguale ma tipizzato per altre sezioni che vorranno usarlo!
 
 # Funzionalità
 1. Non salva alcun dato, una volta aggiornata la pagina si perderà tutto 

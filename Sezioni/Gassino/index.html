@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ricevute</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/Images/favicon.ico">
+    <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/Styles/site.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
+        integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.js"></script>
+    <script src="/JS/jszip.min.js"></script>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1>Genera Ricevute</h1>
+        <hr>
+        <div class="row">
+            <div class="col-md-12 mt-2">
+                <!-- Help -->
+                <div>
+                    <h4> <a data-toggle="collapse" href="#Help" id="HelpCollapser" class="text-dark"
+                            aria-expanded="false">Come funziona?
+                            <span class="text-collapsed"><i class="fas fa-chevron-down"></i></span>
+                            <span class="text-expanded"><i class="fas fa-chevron-up"></i></span>
+                        </a></h4>
+                    <div id="Help" class="collapse">
+                        <p><strong>Controlla la firma!</strong></p>
+                        <p>Per poter generare correttamente le ricevute controlla di aver una firma impostata. Cliccando
+                            sul titolo <strong>"Firma"</strong>, comparir&agrave; una casella dove poter firmare
+                            (volendo si pu&ograve; importare una firma esistente,
+                            ad esempio la foto della vostra firma su un foglio bianco). Una volta firmato cliccate su
+                            "<strong>Salva"</strong>, questo servir&agrave; per salvare la vostra firma anche per le
+                            altre volte che vorrete utilizzare questo sito!&nbsp;</p>
+                        <p>Cliccando su&nbsp;<strong>"Pulisci"</strong>, svuoter&agrave; la casella in modo da poter
+                            caricare o rifare la firma!</p>
+                        <p><strong>Inserisci i dati:</strong></p>
+                        <ul>
+                            <li><strong>Nr:&nbsp;</strong>Inserire il numero da utilizzare per numerare le ricevute. Es:
+                                Nel file excel l'ultimo movimento ha come numero "3", sul sito scriver&ograve; "4"<br>
+                                <strong>Novità! Si possono usare numeratori con un prefisso testuale eg. E-01, verrà
+                                    automaticamente trasformato in E-00001 e incrementato ogni volta che verrà fatto il
+                                    salva</strong>
+                            </li>
+                            <li><strong>Data</strong></li>
+                            <li><strong>Ricevuti da:</strong> Aggiungere i nomi uno per ogni riga (andando a capo ad
+                                ogni nome)</li>
+                            <li><strong>Causale</strong></li>
+                            <li><strong>Importo</strong></li>
+                        </ul>
+                        <p>Una volta aggiunti questi valori, premi&nbsp;<strong>salva!</strong></p>
+                        <p>Dopo aver aggiunto tutte le ricevute da fare, clicca sul pulsante <strong>"Stampa
+                                Ricevute"&nbsp;</strong>per scaricare tutte le ricevute non fiscali. (Alcuni browser
+                            bloccano il download di pi&ugrave; files, in tal caso verr&agrave;
+                            chiesto di accettare a scaricare pi&ugrave; files)</p>
+                        <p>Vi &egrave; poi un altro pulsante <strong>"Copia per Excel"</strong>, questo vi
+                            copier&agrave; negli appunti tutti i dati inseriti nel formato corretto in modo da poterli
+                            incollare direttamente sul file del libro cassa di sezione:
+                            Cliccate sulla prima cella disponibile della colonna "Riferimento Giustificativo" e poi
+                            premete&nbsp;<strong>ctrl+v</strong></p>
+                        <p></p>
+                        <p><strong>NESSUN DATO VIENE SALVATO SUL SITO, <span
+                                    style="text-decoration: underline;">AGGIORNANDO LA PAGINA TUTTE LE RICEVUTE GENERATE
+                                    VERRANNO PERSE.</span></strong></p>
+                        <p><strong>LA FIRMA VIENE SALVATA E GESTITA DAL BROWSER, SE LO CAMBIATE NON VEDRETE LA VOSTRA
+                                FIRMA E BISOGNERA' AGGIUNGERNE UNA NUOVA!</strong></p>
+                        <p></p>
+                    </div>
+                </div><br>
+                <!-- Firma -->
+                <div>
+                    <h4> <a data-toggle="collapse" href="#SignatureContainer" id="SignatureCollapser" class="text-dark"
+                            aria-expanded="false">Firma
+                            <span class="text-collapsed"><i class="fas fa-chevron-down"></i></span>
+                            <span class="text-expanded"><i class="fas fa-chevron-up"></i></span>
+                        </a></h4>
+                    <div id="SignatureContainer" class="collapse">
+                        <p>Le ricevute devono essere firmate, qua sotto hai la possibilità di firmare (o di
+                            <label class="importLabel" for="ImportExistingSignature">importarne una esistente</label>):
+                        </p>
+                        <div class="wrapper">
+                            <canvas id="signature-pad" class="signature-pad" width=500 height=100></canvas>
+                        </div><br>
+                        <button type="button" class="btn btn-secondary" onclick="ClearSignaturePad()">Pulisci</button>
+                        <button type="button" class="btn btn-secondary" onclick="SaveSignature()">Salva</button>
+                        <input type="file" id="ImportExistingSignature" name="ImportExistingSignature" hidden
+                            style="position: absolute; display: none;" />
+                    </div>
+                </div><br>
+
+                <h3>Inserisci</h3>
+                <br>
+                <form id="receiptsForm" action="post">
+                    <div class="row">
+                        <div class="col-sm">
+                            <div class="row">
+                                <div class="col-sm">
+                                    <label for="prezzo">Nr: </label>
+                                    <input type="text" class="form-control" placeholder="Nr." name="LastNo"
+                                        autocomplete="off">
+                                </div>
+                                <div class="col-sm">
+                                    <label for="Date">Data: </label>
+                                    <input type="text" class="form-control" id="datepicker" placeholder="Data"
+                                        name="Date" autocomplete="off" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <label for="Reason">Causale: </label>
+                                    <input type="text" class="form-control" placeholder="Causale" name="Reason"
+                                        autocomplete="off" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <label for="Price">Importo (in lettere): </label>
+                                    <input type="text" class="form-control" placeholder="Prezzo" name="Price"
+                                        autocomplete="off" required readonly>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <label for="Total">Importo (in cifre): </label>
+                                    <input type="number" class="form-control" placeholder="Totale" name="Total"
+                                        autocomplete="off" required step="any">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <label for="Holder">Ricevuti da (uno per riga): </label>
+                            <textarea class="form-control" placeholder="Intestatario" name="Holder" autocomplete="off"
+                                required style="height: 80%;"></textarea>
+
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col">
+                            <input type="submit" class="btn btn-success" value="Salva">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-6 mt-2">
+
+                <div id="out_image" hidden>
+                    <h4>Ricevute:</h4>
+                    <br>
+                    <div id="Links"></div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <hr>
+        <h4>Dati</h4>
+        <div id="toolbar">
+            <button type="button" class="btn btn-secondary" id="printReceipts">Stampa Ricevute</button>
+            <button type="button" class="btn btn-secondary" id="CopyExcel">Copia per Excel</button>
+        </div>
+        <table id="receiptsTbl" data-toolbar="#toolbar">
+            <thead>
+                <tr>
+                    <th data-field="No" data-editable="true">Nr.</th>
+                    <th data-field="Date" data-editable="true">Data</th>
+                    <th data-field="Holder" data-editable="true">Ricevuti da</th>
+                    <th data-field="Price" data-editable="true">Prezzo</th>
+                    <th data-field="Reason" data-editable="true">Causale</th>
+                    <th data-field="Total" data-editable="true">Totale</th>
+                </tr>
+            </thead>
+        </table>
+
+        <br>
+
+        <br>
+        <div id="template" style="display: none;">
+            <div class="border border-success bg-white Content" data-id="{{No}} - {{Holder}}">
+                <div class="px-2 pt-2 row align-items-center">
+                    <div class="col-2">
+                        <img src="./Images/Cngei_Sezioni47.png" width="100" height="100" crossorigin="use-credentials">
+                    </div>
+                    <div class="col-5 align-self-end">
+                        <h5>CNGEI Sezione Scout Gassino Torinese APS</h5>
+                        <p class="mb-0" style="font-size: 0.8rem;">
+                            Via Sassari 5, 10090 Gassino Torinese TO  &emsp;
+                            Codice Fiscale 91013220016
+                        </p>
+                    </div>
+                    <div class="col-5 align-self-end">
+                        <div class="row no-gutters">
+                            <div class="col">
+                                <h4>RICEVUTA n.</h4>
+                            </div>
+                            <div class="col">
+                                <input class="form-control border border-success" value="{{No}}" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <hr class="border-success">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="px-2 row align-items-center mt-2 ">
+                            <div class="col-2 text-right ">
+                                <h4>Ricevuti da:</h4>
+                            </div>
+                            <div class="col-10 ">
+                                <input class="form-control border border-success" value="{{Holder}} " disabled>
+                            </div>
+                        </div>
+                        <div class="px-2 row align-items-center mt-1 ">
+                            <div class="col-2 text-right ">
+                                <h4>Data:</h4>
+                            </div>
+                            <div class="col-10 ">
+                                <input class="form-control border border-success " value="{{Date}} " disabled>
+                            </div>
+                        </div>
+                        <div class="px-2 row align-items-center mt-1 ">
+                            <div class="col-2 text-right ">
+                                <h4>€:</h4>
+                            </div>
+                            <div class="col-10 ">
+                                <input class="form-control border border-success " value="{{Price}} " disabled>
+                            </div>
+                        </div>
+                        <div class="px-2 row align-items-center mt-1 ">
+                            <div class="col-2 text-right ">
+                                <h4>Causale:</h4>
+                            </div>
+                            <div class="col-10">
+                                <input class="form-control border border-success " value="{{Reason}} " disabled>
+                            </div>
+                        </div>
+
+                        <div class="px-2 row mt-3 align-items-center mt-1 ">
+                            <div class="col-2 text-right ">
+                                <h4>Firma:</h4>
+                            </div>
+                            <div class="col-4">
+                                <img id="ReceiptSignature" height="50" width="300">
+                            </div>
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-4 text-right ">
+                                        <h4>TOTALE:</h4>
+                                    </div>
+                                    <div class="col-8 ">
+                                        <input class="form-control border border-success" value="{{Total}} " disabled>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row no-gutters ">
+                            <div class="col no-gutters ">
+                                <hr class="border-success ">
+                            </div>
+                        </div>
+                        <div class="px-2 row">
+                            <div class="col ">
+                                <p>
+                                    Esente da bollo ai sensi dell'art. 82 co.5 D Lgs 117/2017
+                                </p>
+                            </div>
+                            <div class="col">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><br>
+        </div>
+    </div>
+    <div id="all"></div>
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
+    <script src="/JS/dom-to-image.min.js"></script>
+    <script src="/JS/NumToWord.js"></script>
+    <script src="/JS/script.js"></script>
+
+</body>
+
+</html>
